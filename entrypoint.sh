@@ -26,4 +26,4 @@ unset JAVA_HOME
 
 sonar-scanner -Dsonar.projectBaseDir=${INPUT_PROJECTBASEDIR} ${INPUT_ARGS}
 
-rm -rf "${INPUT_PROJECTBASEDIR%/}.scannerwork"
+rm -rf "${INPUT_PROJECTBASEDIR}/.scannerwork"
