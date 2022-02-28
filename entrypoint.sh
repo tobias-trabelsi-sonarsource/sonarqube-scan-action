@@ -3,8 +3,9 @@
 set -e
 
 if [[ -z "${SONAR_TOKEN}" ]]; then
-  echo "This GitHub Action requires the SONAR_TOKEN env variable."
-  exit 1
+  echo "============================ WARNING ============================"
+  echo "Running this GitHub Action without SONAR_TOKEN is not recommended"
+  echo "============================ WARNING ============================"
 fi
 
 if [[ -z "${SONAR_HOST_URL}" ]]; then
@@ -26,4 +27,6 @@ unset JAVA_HOME
 
 sonar-scanner -Dsonar.projectBaseDir=${INPUT_PROJECTBASEDIR} ${INPUT_ARGS}
 
-rm -rf "${INPUT_PROJECTBASEDIR}/.scannerwork"
+PERM=$(stat -c "%a" "${INPUT_PROJECTBASEDIR}/")
+
+chown -R $PERM "${INPUT_PROJECTBASEDIR}/.scannerwork"
