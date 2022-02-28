@@ -27,6 +27,7 @@ unset JAVA_HOME
 
 sonar-scanner -Dsonar.projectBaseDir=${INPUT_PROJECTBASEDIR} ${INPUT_ARGS}
 
-PERM=$(stat -c "%a" "${INPUT_PROJECTBASEDIR}/")
+_tmp_file=$(ls "${INPUT_PROJECTBASEDIR}/" | head -1)
+PERM=$(stat -c "%u:%g" "${INPUT_PROJECTBASEDIR}/$_tmp_file")
 
 chown -R $PERM "${INPUT_PROJECTBASEDIR}/.scannerwork"
