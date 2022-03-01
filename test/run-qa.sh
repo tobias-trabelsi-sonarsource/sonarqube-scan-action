@@ -97,10 +97,11 @@ if [[ ! $? -eq 0 ]]; then
 elif [[ ! -f ".scannerwork/report-task.txt" ]]; then
   error "Couldn't find the report task file. Analysis failed."
   exit 1
-elif [[ $(stat -c "%u:%g" ".scannerwork/report-task.txt") -ne $_current_perm ]]; then
+elif [ ! "$(stat -c "%u:%g" ".scannerwork/report-task.txt")" == "$_current_perm" ]; then
   error "File permissions differ from desired once"
   error "desired: $_current_perm"
   error "actual: $(stat -c "%u:%g" ".scannerwork/report-task.txt")"
+  exit 1
 fi
 success "Analysis successful."
 
